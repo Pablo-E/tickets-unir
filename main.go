@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -60,7 +61,7 @@ func createTicket(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//READ ALL
+//RETURN ALL TICKETS
 func returnAllTickets(w http.ResponseWriter, r *http.Request) {
 
 	db := dbConn()
@@ -94,7 +95,7 @@ func returnAllTickets(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 }
 
-//READ
+//RETURN TICKET
 func returnTicket(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 
@@ -132,7 +133,7 @@ func returnTicket(w http.ResponseWriter, r *http.Request) {
 }
 
 //UPDATE TICKET
-func UpdateTicket(w http.ResponseWriter, r *http.Request) {
+func updateTicket(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "PUT" {
 
@@ -184,13 +185,21 @@ func deleteTicket(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	log.Println("Server started on: http://localhost:8080")
+	log.Println("Server started on: localhost")
 	router := mux.NewRouter().StrictSlash(true)
+	headers := handlers.AllowedHeaders([]string{"X-Request-Widht", "Content-Type", "Authorization"})
+	methods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE"})
+	origins := handlers.AllowedOrigins([]string{"*"})
 	router.HandleFunc("/", returnAllTickets).Methods("GET")
 	router.HandleFunc("/ticket", createTicket).Methods("POST")
 	router.HandleFunc("/ticket/{id}", returnTicket).Methods("GET")
-	router.HandleFunc("/ticket/update", UpdateTicket).Methods("PUT")
+	router.HandleFunc("/ticket/update", updateTicket).Methods("PUT")
 	router.HandleFunc("/ticket/{id}", deleteTicket).Methods("DELETE")
+
+	err := http.ListenAndServe(":8080", handlers.CORS(headers, methods, origins)(router))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sistema de Tickets - Pablo Escoto</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="table-responsive">
+        <div class="table-wrapper">
+          <div class="table-title">
+            <div class="row">
+              <div class="col-xs-6">
+                <h2>Sistema de Tickets</h2>
+              </div>
+              <div class="col-xs-6">
+                <a
+                  href="#create-ticket"
+                  class="btn btn-success"
+                  data-toggle="modal"
+                >
+                  <i class="material-icons">&#xE147;</i>
+                  <span>Crear Ticket</span></a
+                >
+              </div>
+            </div>
+          </div>
+          <table class="tickets table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Problema</th>
+                <th>Prioridad</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- INFORMACION REST-->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal HTML -->
+    <div id="create-ticket" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h4 class="modal-title">Crear Ticket</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Problema</label>
+                <textarea
+                  class="form-control"
+                  id="form-issue"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Prioridad</label>
+                <select class="form-control" id="form-priority">
+                  <option value="BAJA">BAJA</option>
+                  <option value="NORMAL">NORMAL</option>
+                  <option value="ALTA">ALTA</option>
+                  <option value="URGENTE">URGENTE</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Estatus</label>
+                <select class="form-control" id="form-status">
+                  <option value="Abierto">Abierto</option>
+                  <option value="En Espera">En Espera</option>
+                  <option value="Resolviendo">Resolviendo</option>
+                  <option value="Cerrado">Cerrado</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <input
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="Cancelar"
+              />
+              <button type="submit" class="btn btn-success">Crear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Modal HTML -->
+    <div id="edit-ticket-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h4 class="modal-title">Editar Ticket</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Problema</label>
+                <textarea
+                  class="form-control"
+                  id="modal-issue"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Prioridad</label>
+                <select class="form-control" id="modal-priority">
+                  <option value="BAJA">BAJA</option>
+                  <option value="NORMAL">NORMAL</option>
+                  <option value="ALTA">ALTA</option>
+                  <option value="URGENTE">URGENTE</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Estatus</label>
+                <select class="form-control" id="modal-status">
+                  <option value="Abierto">Abierto</option>
+                  <option value="En Espera">En Espera</option>
+                  <option value="Resolviendo">Resolviendo</option>
+                  <option value="Cerrado">Cerrado</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <input
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="Cancelar"
+              />
+              <input type="submit" class="btn btn-info" value="Guardar" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Modal HTML -->
+    <div id="delete-ticket-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h4 class="modal-title">Borrar Ticket</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-hidden="true"
+              >
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>¿Estas seguro que quieres borrar este Ticket?</p>
+              <p class="text-warning">
+                <small>Esta accion no se puede deshacer.</small>
+              </p>
+            </div>
+            <div class="modal-footer">
+              <input
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                value="Cancelar"
+              />
+              <input type="submit" class="btn btn-danger" value="Borrar" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
